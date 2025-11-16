@@ -64,16 +64,7 @@ If you want to persist flow results (or task data) permanently, here are a few s
    - Example: In `task3.run(...)`, after “storing” data, insert into a DB table/collection.
 
 2. **File System**  
-   - Write JSON or other serialized data to disk inside a task.  
-   - Example:  
-     ```python
-     import json  
-     def run(data):  
-         with open("output.json", "w") as f:  
-             json.dump(data, f)  
-         return {"success": True, "data": data}
-     ```
-
+  
 3. **In-memory Cache / Key-Value Store**  
    - Use Redis or Memcached to store intermediate or final results.  
    - Tasks can connect to Redis and `SET` / `GET` data as needed.
@@ -116,7 +107,25 @@ If you want to persist flow results (or task data) permanently, here are a few s
           "target_task_success": "task3",
           "target_task_failure": "end"
         }
+
       ]
     }
   }
 
+ ## **How to Run Locally**
+
+Install dependencies
+
+pip install fastapi uvicorn
+
+
+**Start the API**
+
+uvicorn main:app --reload
+
+
+Open the interactive docs
+Navigate to: http://127.0.0.1:8000/docs
+
+**Trigger a flow**
+Use the /run-flow endpoint in Swagger  UI. Paste your flow JSON and run.
