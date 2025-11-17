@@ -1,9 +1,13 @@
-from tasks.task1 import run as task1_run
-from tasks.task2 import run as task2_run
-from tasks.task3 import run as task3_run
+from typing import Dict
+from core.task_base import BaseTask
 
-TASK_REGISTRY = {
-    "task1": task1_run,
-    "task2": task2_run,
-    "task3": task3_run,
-}
+
+TASK_REGISTRY: Dict[str, type] = {}
+
+def register_task(name: str, task_cls: type):
+    if not issubclass(task_cls, BaseTask):
+        raise ValueError("task_cls must subclass BaseTask")
+    TASK_REGISTRY[name] = task_cls
+
+def get_task_cls(name: str):
+    return TASK_REGISTRY.get(name)
